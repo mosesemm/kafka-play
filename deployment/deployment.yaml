@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer-app
+  labels:
+    app: producer-app
+spec:
+  selector:
+    matchLabels:
+      app: producer-app
+  template:
+    metadata:
+      labels:
+        app: producer-app
+    spec:
+      containers:
+        - name: producer-app
+          image: producer-app:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  key: KAFKA_BOOTSTRAP_SERVERS
+                  name: producer-app
+            - name: someDbPass
+              valueFrom:
+                secretKeyRef:
+                  key: someDbPass
+                  name: producer-app

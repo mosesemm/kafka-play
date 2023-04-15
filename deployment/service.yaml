@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: producer-app
+spec:
+  selector:
+    app: producer-app
+  ports:
+    - name: service-port
+      protocol: TCP
+      port: 80
+      targetPort: 8080
